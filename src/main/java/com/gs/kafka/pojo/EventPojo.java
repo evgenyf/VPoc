@@ -33,7 +33,7 @@ public class EventPojo implements Serializable {
 
     @Override
     public String toString() {
-        return "ControlPojo{" +
+        return "EventPojo{" +
                 "a='" + a + '\'' +
                 ", b='" + b + '\'' +
                 ", c='" + c + '\'' +

@@ -45,7 +45,7 @@ public class ControlPojosProducer {
 
         createAndFillInitialArray();
 
-        this.kafkaProducer = new KafkaProducer(initKafkaProducerProperties(kafkaProps));
+        this.kafkaProducer = new KafkaProducer<>(initKafkaProducerProperties(kafkaProps));
 
         scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
     }
@@ -69,7 +69,7 @@ public class ControlPojosProducer {
     }
 
     private Properties initKafkaProducerProperties(Properties kafkaProps){
-        Map<Object,Object> props = new HashMap(kafkaProps);
+        Map<Object,Object> props = new HashMap<>(kafkaProps);
         props.putIfAbsent(ProducerConfig.ACKS_CONFIG, "1");
         props.putIfAbsent(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,"org.apache.kafka.common.serialization.StringSerializer");
         props.putIfAbsent(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaControlPojoSerializer.class.getName());
@@ -78,7 +78,7 @@ public class ControlPojosProducer {
 
     private void createAndFillInitialArray() {
         for( int i = 0; i < pojos.length; i++ ){
-            pojos[ i ] = new ControlPojo( "A" + i, "B" + 1, DEFAULT_TTL_VAL );
+            pojos[ i ] = new ControlPojo( "A" + i, "B" + i, DEFAULT_TTL_VAL );
         }
     }
 
