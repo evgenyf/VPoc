@@ -1,6 +1,6 @@
-package com.gs.kafka.embedded;
+package com.gs.poc.kafka.embedded;
 
-import com.gs.kafka.utils.Utils;
+import com.gs.poc.kafka.utils.Utils;
 import kafka.server.KafkaConfig;
 import kafka.server.KafkaServerStartable;
 import org.apache.commons.io.FileUtils;

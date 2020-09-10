@@ -1,4 +1,4 @@
-package com.gs.kafka.pojo;
+package com.gs.poc.kafka.pojo;
 
 import java.io.Serializable;
 

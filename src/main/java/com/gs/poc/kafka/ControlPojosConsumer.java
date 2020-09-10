@@ -1,8 +1,7 @@
-package com.gs.kafka;
+package com.gs.poc.kafka;
 
-import com.gs.kafka.pojo.ControlPojo;
-import com.gs.kafka.pojo.EventPojo;
-import com.gs.kafka.serializations.KafkaControlPojoDeserializer;
+import com.gs.poc.kafka.pojo.ControlPojo;
+import com.gs.poc.kafka.serializations.KafkaControlPojoDeserializer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 

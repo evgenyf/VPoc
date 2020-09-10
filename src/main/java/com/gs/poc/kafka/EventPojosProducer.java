@@ -1,8 +1,8 @@
-package com.gs.kafka;
+package com.gs.poc.kafka;
 
-import com.gs.kafka.pojo.EventPojo;
-import com.gs.kafka.serializations.KafkaEventPojoSerializer;
-import com.gs.kafka.utils.Utils;
+import com.gs.poc.kafka.pojo.EventPojo;
+import com.gs.poc.kafka.serializations.KafkaEventPojoSerializer;
+import com.gs.poc.kafka.utils.Utils;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.KafkaException;
 

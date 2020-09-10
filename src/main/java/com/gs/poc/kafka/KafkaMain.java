@@ -1,8 +1,8 @@
-package com.gs.kafka;
+package com.gs.poc.kafka;
 
-import com.gs.kafka.embedded.EmbeddedKafka;
-import com.gs.kafka.embedded.EmbeddedZookeeper;
-import com.gs.kafka.utils.Utils;
+import com.gs.poc.kafka.embedded.EmbeddedKafka;
+import com.gs.poc.kafka.embedded.EmbeddedZookeeper;
+import com.gs.poc.kafka.utils.Utils;
 import org.apache.kafka.clients.CommonClientConfigs;
 
 import java.io.IOException;

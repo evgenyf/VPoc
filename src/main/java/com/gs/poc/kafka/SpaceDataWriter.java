@@ -1,6 +1,6 @@
-package com.gs.kafka;
+package com.gs.poc.kafka;
 
-import com.gs.kafka.pojo.ControlPojo;
+import com.gs.poc.kafka.pojo.ControlPojo;
 import org.openspaces.admin.Admin;
 import org.openspaces.admin.AdminFactory;
 import org.openspaces.admin.space.Space;

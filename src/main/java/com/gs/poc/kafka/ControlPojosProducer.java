@@ -1,15 +1,14 @@
-package com.gs.kafka;
+package com.gs.poc.kafka;
 
-import com.gs.kafka.pojo.ControlPojo;
-import com.gs.kafka.serializations.KafkaControlPojoSerializer;
-import com.gs.kafka.utils.Utils;
+import com.gs.poc.kafka.pojo.ControlPojo;
+import com.gs.poc.kafka.serializations.KafkaControlPojoSerializer;
+import com.gs.poc.kafka.utils.Utils;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.KafkaException;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Random;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;

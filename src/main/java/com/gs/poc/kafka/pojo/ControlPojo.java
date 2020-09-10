@@ -1,4 +1,4 @@
-package com.gs.kafka.pojo;
+package com.gs.poc.kafka.pojo;
 
 import com.gigaspaces.annotation.pojo.SpaceId;
 import com.gigaspaces.annotation.pojo.SpaceIndex;

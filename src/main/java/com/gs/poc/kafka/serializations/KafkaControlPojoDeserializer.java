@@ -1,6 +1,6 @@
-package com.gs.kafka.serializations;
+package com.gs.poc.kafka.serializations;
 
-import com.gs.kafka.pojo.ControlPojo;
+import com.gs.poc.kafka.pojo.ControlPojo;
 import org.apache.commons.lang.SerializationUtils;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Deserializer;

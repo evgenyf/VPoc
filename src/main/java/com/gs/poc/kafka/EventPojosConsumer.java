@@ -1,8 +1,7 @@
-package com.gs.kafka;
+package com.gs.poc.kafka;
 
-import com.gs.kafka.pojo.EventPojo;
-import com.gs.kafka.serializations.KafkaEventPojoDeserializer;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
+import com.gs.poc.kafka.pojo.EventPojo;
+import com.gs.poc.kafka.serializations.KafkaEventPojoDeserializer;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 
 import java.time.Duration;

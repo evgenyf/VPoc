@@ -1,24 +1,24 @@
-package com.gs.kafka.serializations;
+package com.gs.poc.kafka.serializations;
 
-import com.gs.kafka.pojo.ControlPojo;
+import com.gs.poc.kafka.pojo.EventPojo;
 import org.apache.commons.lang.SerializationUtils;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Serializer;
 
 import java.util.Map;
 
-public class KafkaControlPojoSerializer implements Serializer<ControlPojo> {
+public class KafkaEventPojoSerializer implements Serializer<EventPojo> {
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {
     }
 
     @Override
-    public byte[] serialize(String topic, ControlPojo data) {
+    public byte[] serialize(String topic, EventPojo data) {
         return SerializationUtils.serialize(data);
     }
 
     @Override
-    public byte[] serialize(String topic, Headers headers, ControlPojo data) {
+    public byte[] serialize(String topic, Headers headers, EventPojo data) {
         return SerializationUtils.serialize(data);
     }
 

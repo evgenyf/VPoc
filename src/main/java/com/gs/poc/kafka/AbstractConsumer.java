@@ -1,6 +1,6 @@
-package com.gs.kafka;
+package com.gs.poc.kafka;
 
-import com.gs.kafka.utils.Utils;
+import com.gs.poc.kafka.utils.Utils;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -30,7 +30,7 @@ abstract public class AbstractConsumer {
     }
 
     private Properties initConsumerProperties(Properties kafkaProps){
-        Map<Object,Object> props = new HashMap(kafkaProps);
+        Map<Object,Object> props = new HashMap<>(kafkaProps);
         props.putIfAbsent(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
         props.putIfAbsent(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,"org.apache.kafka.common.serialization.StringDeserializer");
         props.putIfAbsent(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, deserializerValueClassName /*KafkaEventPojoDeserializer.class.getName()*/);

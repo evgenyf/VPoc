@@ -1,6 +1,6 @@
-package com.gs.kafka.embedded;
+package com.gs.poc.kafka.embedded;
 
-import com.gs.kafka.utils.Utils;
+import com.gs.poc.kafka.utils.Utils;
 import org.apache.commons.io.FileUtils;
 import org.apache.zookeeper.server.NIOServerCnxnFactory;
 import org.apache.zookeeper.server.ZooKeeperServer;
