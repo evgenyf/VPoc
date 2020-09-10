@@ -85,18 +85,19 @@ public class ControlPojosProducer {
     private void updateArray( boolean order ) {
         if( order ) {
             for (int i = 0; i < pojos.length; i++) {
-                setCValue( i );
+                setCValue( i, i );
             }
         }
         else{
+            int j = 0;
             for( int i = pojos.length - 1; i >=0 ; i-- ){
-                setCValue( i );
+                setCValue( i, j++ );
             }
         }
     }
 
-    private void setCValue( int i ){
-        pojos[ i ].setC( "C" + i );
+    private void setCValue( int i, int cValueIndex ){
+        pojos[ i ].setC( "C" + cValueIndex );
     }
 
     private void sendToKafka( String key, ControlPojo value ){

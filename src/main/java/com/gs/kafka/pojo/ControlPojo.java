@@ -1,5 +1,8 @@
 package com.gs.kafka.pojo;
 
+import com.gigaspaces.annotation.pojo.SpaceId;
+import com.gigaspaces.annotation.pojo.SpaceIndex;
+
 import java.io.Serializable;
 
 public class ControlPojo implements Serializable {
@@ -27,7 +30,8 @@ public class ControlPojo implements Serializable {
         this.ttl = ttl;
     }
 
-/*    public String getA() {
+    @SpaceIndex
+    public String getA() {
         return a;
     }
 
@@ -35,6 +39,7 @@ public class ControlPojo implements Serializable {
         this.a = a;
     }
 
+    @SpaceIndex
     public String getB() {
         return b;
     }
@@ -43,10 +48,12 @@ public class ControlPojo implements Serializable {
         this.b = b;
     }
 
+    @SpaceIndex
+    @SpaceId(autoGenerate = false)
     public String getC() {
         return c;
     }
-*/
+
     public void setC(String c) {
         this.c = c;
     }
