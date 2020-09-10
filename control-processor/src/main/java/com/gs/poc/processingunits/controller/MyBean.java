@@ -15,16 +15,14 @@
  */
 package com.gs.poc.processingunits.controller;
 
-import org.slf4j.*;
-import javax.annotation.*;
-
-import org.openspaces.core.*;
-import org.openspaces.core.space.status.*;
-import org.openspaces.core.cluster.*;
+import org.openspaces.core.GigaSpace;
+import org.openspaces.core.cluster.ClusterInfo;
+import org.openspaces.core.cluster.ClusterInfoContext;
+import org.openspaces.core.space.status.SpaceStatusChanged;
+import org.openspaces.core.space.status.SpaceStatusChangedEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
-
-import java.util.Arrays;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -56,7 +54,7 @@ public class MyBean {
     public void onSpaceStatusChange(SpaceStatusChangedEvent event) {
         logger.info("Space {} is {}", id, event.getSpaceMode());
         if (event.isActive()) {
-            // If you have initialization code for active instances only, put it here.
+            logger.info("Space {} is {} ACTIVE !!!!", id, event.getSpaceMode());
         } else {
             // Space is backup, or space is primary but suspended.
             // If your code should only run when the space is active, you should deactivate it here.
