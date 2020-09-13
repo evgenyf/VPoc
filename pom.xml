@@ -31,44 +31,33 @@
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka_2.12</artifactId>
             <version>2.6.0</version>
+            <!--<scope>compile</scope>-->
         </dependency>
         <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.7</version>
+            <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.gigaspaces</groupId>
             <artifactId>xap-datagrid</artifactId>
             <version>15.5.0-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.gigaspaces</groupId>
             <artifactId>xap-admin</artifactId>
             <version>15.5.0-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
-<!--
-        <dependency>
-            <groupId>org.gigaspaces</groupId>
-            <artifactId>xap-openspaces</artifactId>
-            <version>15.5.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.gigaspaces</groupId>
-            <artifactId>xap-service-grid</artifactId>
-            <version>15.5.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openspaces</groupId>
-            <artifactId>xap-zookeeper</artifactId>
-            <version>15.5.0-SNAPSHOT</version>
-        </dependency>-->
     </dependencies>
 </project>

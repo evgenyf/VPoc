@@ -17,20 +17,21 @@ public class KafkaMain {
 
         String controlTopic = "control";
         String eventsTopic = "events";
-
+/*
         List<Integer> ports;
         try {
             ports = Utils.choosePorts(2);
         } catch (IOException e) {
             throw new RuntimeException("Failed to get ports due to" + e.getMessage(), e);
         }
-
         int zookeeperPort = ports.get(0);
-        int kafkaPort = ports.get(1);
+        int kafkaPort = ports.get(1);*/
+
+        int zookeeperPort = 2182;
+        int kafkaPort = 9092;
 
         Properties kafkaProps = new Properties();
         kafkaProps.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, "localhost:" + kafkaPort);
-
 
         EmbeddedZookeeper embeddedZookeeper = new EmbeddedZookeeper(zookeeperPort);
         try {
@@ -52,10 +53,12 @@ public class KafkaMain {
         EventPojosProducer eventPojosProducer = new EventPojosProducer( eventsTopic, kafkaProps, numberOfEventPojosPerBatch, numberOfControlPojosPerBatch, 1 );
         eventPojosProducer.startWritingToKafka();
 
+/*
         ControlPojosConsumer controlPojosConsumer = new ControlPojosConsumer( controlTopic, kafkaProps );
         controlPojosConsumer.startReadingFromKafka();
+*/
 
-        EventPojosConsumer eventPojosConsumer = new EventPojosConsumer( eventsTopic, kafkaProps );
-        eventPojosConsumer.startReadingFromKafka();
+/*        EventPojosConsumer eventPojosConsumer = new EventPojosConsumer( eventsTopic, kafkaProps );
+        eventPojosConsumer.startReadingFromKafka();*/
     }
 }

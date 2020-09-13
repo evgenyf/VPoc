@@ -68,7 +68,7 @@ public class EventPojosProducer {
     }
 
     private Properties initKafkaProducerProperties(Properties kafkaProps){
-        Map<Object,Object> props = new HashMap(kafkaProps);
+        Map<Object,Object> props = new HashMap<>(kafkaProps);
         props.putIfAbsent(ProducerConfig.ACKS_CONFIG, "1");
         props.putIfAbsent(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,"org.apache.kafka.common.serialization.StringSerializer");
         props.putIfAbsent(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaEventPojoSerializer.class.getName());
@@ -85,7 +85,7 @@ public class EventPojosProducer {
         for( int i = 0; i < pojos.length; i++ ){
             int randomInt = rand.nextInt(3);
             EventPojo pojo = pojos[i];
-            int index = i >= numberOfControlPojosPerBatch ? numberOfControlPojosPerBatch - i : i;
+            int index = i >= numberOfControlPojosPerBatch ? i - numberOfControlPojosPerBatch : i;
             switch (randomInt){
                 case 0:
                     pojo.setA( "A" + index );

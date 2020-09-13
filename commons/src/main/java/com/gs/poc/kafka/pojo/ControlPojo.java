@@ -2,10 +2,13 @@ package com.gs.poc.kafka.pojo;
 
 import com.gigaspaces.annotation.pojo.SpaceId;
 import com.gigaspaces.annotation.pojo.SpaceIndex;
+import com.gigaspaces.metadata.index.SpaceIndexType;
 
 import java.io.Serializable;
 
 public class ControlPojo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String a;
     private String b;
@@ -30,7 +33,7 @@ public class ControlPojo implements Serializable {
         this.ttl = ttl;
     }
 
-    @SpaceIndex
+    @SpaceIndex(type = SpaceIndexType.EQUAL)
     public String getA() {
         return a;
     }
@@ -39,7 +42,7 @@ public class ControlPojo implements Serializable {
         this.a = a;
     }
 
-    @SpaceIndex
+    @SpaceIndex(type = SpaceIndexType.EQUAL)
     public String getB() {
         return b;
     }
@@ -48,7 +51,7 @@ public class ControlPojo implements Serializable {
         this.b = b;
     }
 
-    @SpaceIndex
+    @SpaceIndex(type = SpaceIndexType.EQUAL)
     @SpaceId(autoGenerate = false)
     public String getC() {
         return c;

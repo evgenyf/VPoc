@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class EventPojo implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private String a;
     private String b;
     private String c;
@@ -29,6 +31,26 @@ public class EventPojo implements Serializable {
 
     public void setC(String c) {
         this.c = c;
+    }
+
+    public String getA() {
+        return a;
+    }
+
+    public String getB() {
+        return b;
+    }
+
+    public String getC() {
+        return c;
+    }
+
+    public String getD() {
+        return d;
+    }
+
+    public void setD(String d) {
+        this.d = d;
     }
 
     @Override
