@@ -20,12 +20,15 @@ import com.gs.poc.kafka.pojo.ControlPojo;
 import com.gs.poc.kafka.pojo.EventPojo;
 import com.gs.poc.kafka.serializations.KafkaControlPojoDeserializer;
 import com.gs.poc.kafka.serializations.KafkaEventPojoDeserializer;
-import com.gs.poc.processingunits.controller.utils.KafkaConsumerUtils;
+import com.gs.poc.kafka.serializations.KafkaEventPojoSerializer;
+import com.gs.poc.processingunits.controller.utils.KafkaUtils;
 import com.j_spaces.core.client.SQLQuery;
 import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.openspaces.core.GigaSpace;
 import org.openspaces.core.cluster.ClusterInfo;
 import org.openspaces.core.cluster.ClusterInfoContext;
@@ -58,11 +61,14 @@ public class MyBean {
     protected Consumer<String,ControlPojo> controlPojosKafkaConsumer;
     protected Consumer<String,EventPojo> eventPojosKafkaConsumer;
 
+    private Producer<String, EventPojo> enrichedPojosKafkaProducer;
+
     private boolean readFromControlTopic = false;
     private boolean readFromEventsTopic = false;
 
     private static String CONTROL_TOPIC = "control";
     private static String EVENTS_TOPIC = "events";
+    private static String ENRICHED_TOPIC = "enriched";
 
     @PostConstruct
     public void initialize() {
@@ -72,13 +78,14 @@ public class MyBean {
         // If you wish to do something for primaries only, see @SpaceStatusChanged
     }
 
-    private void initKafkaConsumers(){
+    private void initKafka(){
 
         Properties kafkaProps = new Properties();
         kafkaProps.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, "localhost:" + 9092);
 
-        this.controlPojosKafkaConsumer = KafkaConsumerUtils.createConsumer( kafkaProps, KafkaControlPojoDeserializer.class, CONTROL_TOPIC );
-        this.eventPojosKafkaConsumer = KafkaConsumerUtils.createConsumer( kafkaProps, KafkaEventPojoDeserializer.class, EVENTS_TOPIC );
+        this.controlPojosKafkaConsumer = KafkaUtils.createConsumer( kafkaProps, KafkaControlPojoDeserializer.class, CONTROL_TOPIC );
+        this.eventPojosKafkaConsumer = KafkaUtils.createConsumer( kafkaProps, KafkaEventPojoDeserializer.class, EVENTS_TOPIC );
+        this.enrichedPojosKafkaProducer = KafkaUtils.createProducer( kafkaProps, KafkaEventPojoSerializer.class );
     }
 
     @SpaceStatusChanged
@@ -87,12 +94,9 @@ public class MyBean {
         ControlPojo controlPojo = new ControlPojo();
         if (event.isActive()) {
             logger.info("Space {} is {} ACTIVE !!!!", id, event.getSpaceMode());
-            initKafkaConsumers();
+            initKafka();
             startReadingFromKafka();
-        } else {
-            // Space is backup, or space is primary but suspended.
-            // If your code should only run when the space is active, you should deactivate it here.
-        }
+        } 
     }
 
     @PreDestroy
@@ -123,15 +127,10 @@ public class MyBean {
 
         for (ConsumerRecord<String, ControlPojo> record : records) {
             ControlPojo controlPojo = record.value();
-            //System.out.println("CONTROL, Message received, key:" + record.key() + ", value:" + pojo);
             pojos[ index++ ] = controlPojo;
         }
         if( pojos.length > 0 ) {
-            //System.out.println("before write to space, " + pojos.length);
-
             gigaSpace.writeMultiple(pojos);//, ttl*1000 );
-
-            //System.out.println("After write to space, " + pojos.length);
         }
     }
 
@@ -146,16 +145,17 @@ public class MyBean {
                 ControlPojo controlPojo = gigaSpace.read(controlPojoQuery);
                 logger.info( "Query {} , Pojo {}", controlPojoQuery, controlPojo );
                 if( controlPojo != null ){
-                    String a = controlPojo.getA();
-                    String b = controlPojo.getB();
-
-                    final String d = a + b;
-                    eventPojo.setD( d );
-                    //write to enriched topic "enriched"
-
+                    enrichDataAndSendToProducer( controlPojo, eventPojo );
                 }
             }
         }
+    }
+
+    private void enrichDataAndSendToProducer(ControlPojo controlPojo, EventPojo eventPojo) {
+
+        eventPojo.setD( controlPojo.getA() + controlPojo.getB() );
+        //write to enriched topic "enriched"
+        enrichedPojosKafkaProducer.send( new ProducerRecord<>( ENRICHED_TOPIC, "enrichedKey", eventPojo ) );
     }
 
     private ISpaceQuery<ControlPojo> createControlQuery( EventPojo eventPojo ){
