@@ -1,6 +1,5 @@
 package com.gs.poc.processingunits.controller.utils;
 
-import com.gs.poc.kafka.serializations.KafkaEventPojoSerializer;
 import com.gs.poc.kafka.utils.Utils;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;

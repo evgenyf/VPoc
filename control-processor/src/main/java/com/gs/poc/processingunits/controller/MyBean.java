@@ -122,15 +122,10 @@ public class MyBean {
 
     private void readAndHandleEventsFromControlTopic(){
         ConsumerRecords<String, ControlPojo> records = controlPojosKafkaConsumer.poll(Duration.ofMillis(100));
-        int index = 0;
-        ControlPojo[] pojos = new ControlPojo[ records.count() ];
-
+        //write just polled object to space with appropriate ttl
         for (ConsumerRecord<String, ControlPojo> record : records) {
             ControlPojo controlPojo = record.value();
-            pojos[ index++ ] = controlPojo;
-        }
-        if( pojos.length > 0 ) {
-            gigaSpace.writeMultiple(pojos);//, ttl*1000 );
+            gigaSpace.write( controlPojo, controlPojo.getTtl()*1000 );
         }
     }
 
