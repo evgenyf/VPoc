@@ -83,9 +83,9 @@ public class MyBean {
         Properties kafkaProps = new Properties();
         kafkaProps.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, "localhost:" + 9092);
 
-        this.controlPojosKafkaConsumer = KafkaUtils.createConsumer( kafkaProps, KafkaControlPojoDeserializer.class, CONTROL_TOPIC );
-        this.eventPojosKafkaConsumer = KafkaUtils.createConsumer( kafkaProps, KafkaEventPojoDeserializer.class, EVENTS_TOPIC );
-        this.enrichedPojosKafkaProducer = KafkaUtils.createProducer( kafkaProps, KafkaEventPojoSerializer.class );
+        this.controlPojosKafkaConsumer = KafkaUtils.<String, ControlPojo>createConsumer(kafkaProps, KafkaControlPojoDeserializer.class, CONTROL_TOPIC);
+        this.eventPojosKafkaConsumer = KafkaUtils.<String, EventPojo>createConsumer(kafkaProps, KafkaEventPojoDeserializer.class, EVENTS_TOPIC);
+        this.enrichedPojosKafkaProducer = KafkaUtils.<String, EventPojo>createProducer(kafkaProps, KafkaEventPojoSerializer.class);
     }
 
     @SpaceStatusChanged
@@ -122,15 +122,22 @@ public class MyBean {
 
     private void readAndHandleEventsFromControlTopic(){
         ConsumerRecords<String, ControlPojo> records = controlPojosKafkaConsumer.poll(Duration.ofMillis(100));
+        long startTime = System.currentTimeMillis();
         //write just polled object to space with appropriate ttl
         for (ConsumerRecord<String, ControlPojo> record : records) {
             ControlPojo controlPojo = record.value();
             gigaSpace.write( controlPojo, controlPojo.getTtl()*1000 );
         }
+
+        if( !records.isEmpty() ) {
+            logger.info("Writing [{}] control events to space took [{}] msec.", records.count(), (System.currentTimeMillis() - startTime));
+        }
     }
 
     private void readAndHandleEventsFromEventsTopic(){
         ConsumerRecords<String, EventPojo> records = eventPojosKafkaConsumer.poll(Duration.ofMillis(100));
+
+        long startTime = System.currentTimeMillis();
 
         for (ConsumerRecord<String, EventPojo> record : records) {
             EventPojo eventPojo = record.value();
@@ -138,11 +145,14 @@ public class MyBean {
             ISpaceQuery<ControlPojo> controlPojoQuery = createControlQuery( eventPojo );
             if( controlPojoQuery != null ) {
                 ControlPojo controlPojo = gigaSpace.read(controlPojoQuery);
-                logger.info( "Query {} , Pojo {}", controlPojoQuery, controlPojo );
+                //logger.info( "Query {} , Pojo {}", controlPojoQuery, controlPojo );
                 if( controlPojo != null ){
                     enrichDataAndSendToProducer( controlPojo, eventPojo );
                 }
             }
+        }
+        if( !records.isEmpty() ) {
+            logger.info("Reading from space, enriching and writing to kafka of [{}] events took [{}] msec.", records.count(), (System.currentTimeMillis() - startTime));
         }
     }
 

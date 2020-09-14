@@ -35,6 +35,8 @@ abstract public class AbstractConsumer {
         props.putIfAbsent(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,"org.apache.kafka.common.serialization.StringDeserializer");
         props.putIfAbsent(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, deserializerValueClassName /*KafkaEventPojoDeserializer.class.getName()*/);
         props.putIfAbsent(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,"earliest");
+        props.putIfAbsent(ConsumerConfig.MAX_POLL_RECORDS_CONFIG,10_000);
+
         return Utils.toProperties(props);
     }
 

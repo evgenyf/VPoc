@@ -52,13 +52,15 @@ public class ControlPojosProducer {
         future = scheduledThreadPoolExecutor.scheduleAtFixedRate(() -> {
             updateArray( order );
             order = !order;
-            System.out.println( "START WRITTING Control POjo BATCH" );
+            //System.out.println( "START WRITTING Control POjo BATCH" );
             long startTime = System.currentTimeMillis();
             for( int i = 0; i < numberOfObjectsPerBatch; i++  ) {
                 sendToKafka("myKey", pojos[i]);
             }
+/*
             System.out.println( "STOP WRITTING Control POjo  BATCH, writing of [" + numberOfObjectsPerBatch +
                     "] took " + ( System.currentTimeMillis() - startTime ) + " msec." );
+*/
         }, 0, writePeriodInSeconds, TimeUnit.SECONDS);
     }
 

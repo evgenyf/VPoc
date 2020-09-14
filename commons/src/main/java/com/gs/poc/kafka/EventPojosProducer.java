@@ -53,12 +53,12 @@ public class EventPojosProducer {
             @Override
             public void run() {
                 updateArray();
-                System.out.println( "START WRITTING Event Pojo BATCH" );
+                //System.out.println( "START WRITTING Event Pojo BATCH" );
                 long startTime = System.currentTimeMillis();
                 for( int i = 0; i < numberOfObjectsPerBatch; i++  ) {
                     sendToKafka("myKey", pojos[i]);
                 }
-                System.out.println( "STOP WRITTING Event POjo BATCH, writing of [" + numberOfObjectsPerBatch + "] took " + ( System.currentTimeMillis() - startTime ) + " msec." );
+                //System.out.println( "STOP WRITTING Event POjo BATCH, writing of [" + numberOfObjectsPerBatch + "] took " + ( System.currentTimeMillis() - startTime ) + " msec." );
             }
         }, 0, writePeriodInSeconds, TimeUnit.SECONDS);
     }
