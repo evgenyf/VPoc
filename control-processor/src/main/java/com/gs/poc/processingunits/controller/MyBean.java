@@ -129,10 +129,10 @@ public class MyBean {
             gigaSpace.write( controlPojo, controlPojo.getTtl()*1000 );
         }
 
-        if( !records.isEmpty() ) {
+/*        if( !records.isEmpty() ) {
             long totalTime = System.currentTimeMillis() - startTime;
-            //logger.info("Writing [{}] control events to space took [{}] msec., throughput is [{}] oper./sec", records.count(), totalTime, 1000*records.count()/totalTime );
-        }
+            logger.info("Writing [{}] control events to space took [{}] msec., throughput is [{}] oper./sec", records.count(), totalTime, 1000*records.count()/totalTime );
+        }*/
     }
 
     private void readAndHandleEventsFromEventsTopic(){
@@ -151,19 +151,19 @@ public class MyBean {
                     enrichDataAndSendToProducer( controlPojo, eventPojo );
                 }
                 else{
-                    logger.info( "ControlPojo is NULL for query {}", controlPojoQuery );
+                    //logger.info( "ControlPojo is NULL for query {}", controlPojoQuery );
                 }
             }
         }
         if( !records.isEmpty() ) {
             long totalTime = System.currentTimeMillis() - startTime;
-            logger.info("Reading from space, enriching and writing to kafka of [{}] events took [{}] msec., throughput is [{}] oper./sec", records.count(), totalTime, 1000*records.count()/totalTime );
+            logger.info("Reading from space, enriching and writing to kafka of [{}] events took [{}] msec., throughput is [{}] oper./sec", records.count(), totalTime, totalTime != 0 ? 1000*records.count()/totalTime : "N/A" );
         }
     }
 
     private void enrichDataAndSendToProducer(ControlPojo controlPojo, EventPojo eventPojo) {
 
-        eventPojo.setD( controlPojo.getA() + controlPojo.getB() );
+        eventPojo.setD( controlPojo.getA() + "_" + controlPojo.getB() );
         //write to enriched topic "enriched"
         enrichedPojosKafkaProducer.send( new ProducerRecord<>( ENRICHED_TOPIC, "enrichedKey", eventPojo ) );
     }

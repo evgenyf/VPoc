@@ -15,7 +15,12 @@ public class EventPojosConsumer extends AbstractConsumer{
 
     @Override
     protected void readFromKafka() {
-        ConsumerRecords<String, EventPojo> records = kafkaConsumer.poll(Duration.ofMillis(100));
+        try {
+            ConsumerRecords<String, EventPojo> records = kafkaConsumer.poll(Duration.ofMillis(100));
+        }
+        catch( Exception e ){
+            e.printStackTrace();
+        }
 
 /*        for (ConsumerRecord<String, EventPojo> record : records) {
             System.out.println("EVENT, Message received, key:" + record.key() + ", value:" + record.value());
