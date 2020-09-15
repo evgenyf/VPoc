@@ -130,7 +130,8 @@ public class MyBean {
         }
 
         if( !records.isEmpty() ) {
-            logger.info("Writing [{}] control events to space took [{}] msec.", records.count(), (System.currentTimeMillis() - startTime));
+            long totalTime = System.currentTimeMillis() - startTime;
+            logger.info("Writing [{}] control events to space took [{}] msec., throughput is [{}] oper./sec", records.count(), totalTime, 1000*records.count()/totalTime );
         }
     }
 
@@ -152,7 +153,8 @@ public class MyBean {
             }
         }
         if( !records.isEmpty() ) {
-            logger.info("Reading from space, enriching and writing to kafka of [{}] events took [{}] msec.", records.count(), (System.currentTimeMillis() - startTime));
+            long totalTime = System.currentTimeMillis() - startTime;
+            logger.info("Reading from space, enriching and writing to kafka of [{}] events took [{}] msec., throughput is [{}] oper./sec", records.count(), totalTime, 1000*records.count()/totalTime );
         }
     }
 
