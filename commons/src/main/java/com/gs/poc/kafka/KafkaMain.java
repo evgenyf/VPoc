@@ -43,8 +43,8 @@ public class KafkaMain {
         embeddedKafka.startup();
 
 
-        final int numberOfControlPojosPerBatch = 10;
-        final int numberOfEventPojosPerBatch = 20;
+        final int numberOfControlPojosPerBatch = 10_000;
+        final int numberOfEventPojosPerBatch = 20_000;
 
         ControlPojosProducer controlPojosProducer =
                 new ControlPojosProducer( controlTopic, kafkaProps, numberOfControlPojosPerBatch, 20 );
@@ -54,11 +54,11 @@ public class KafkaMain {
                 new EventPojosProducer( eventsTopic, kafkaProps, numberOfEventPojosPerBatch, numberOfControlPojosPerBatch, 1 );
         eventPojosProducer.startWritingToKafka();
 
-
+/*
         ControlPojosConsumer controlPojosConsumer = new ControlPojosConsumer( controlTopic, kafkaProps );
         controlPojosConsumer.startReadingFromKafka();
 
         EventPojosConsumer eventPojosConsumer = new EventPojosConsumer( eventsTopic, kafkaProps );
-        eventPojosConsumer.startReadingFromKafka();
+        eventPojosConsumer.startReadingFromKafka();*/
     }
 }
