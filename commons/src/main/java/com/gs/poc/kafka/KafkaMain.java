@@ -2,7 +2,6 @@ package com.gs.poc.kafka;
 
 import com.gs.poc.kafka.embedded.EmbeddedKafka;
 import com.gs.poc.kafka.embedded.EmbeddedZookeeper;
-import com.gs.poc.kafka.utils.Utils;
 import org.apache.kafka.clients.CommonClientConfigs;
 
 import java.io.IOException;
@@ -53,8 +52,7 @@ public class KafkaMain {
         EventPojosProducer eventPojosProducer = new EventPojosProducer( eventsTopic, kafkaProps, numberOfEventPojosPerBatch, numberOfControlPojosPerBatch, 1 );
         eventPojosProducer.startWritingToKafka();
 
-/*
-        ControlPojosConsumer controlPojosConsumer = new ControlPojosConsumer( controlTopic, kafkaProps );
+/*        ControlPojosConsumer controlPojosConsumer = new ControlPojosConsumer( controlTopic, kafkaProps );
         controlPojosConsumer.startReadingFromKafka();
 */
 

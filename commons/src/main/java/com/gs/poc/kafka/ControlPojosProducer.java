@@ -29,6 +29,7 @@ public class ControlPojosProducer {
     private final ScheduledThreadPoolExecutor scheduledThreadPoolExecutor;
 
     private final static int DEFAULT_TTL_IN_SECONDS = 30;
+    private final static int SHORT_TTL_IN_SECONDS = 3;
 
     private ScheduledFuture<?> future;
     private boolean order = true;
@@ -78,7 +79,7 @@ public class ControlPojosProducer {
 
     private void createAndFillInitialArray() {
         for( int i = 0; i < pojos.length; i++ ){
-            pojos[ i ] = new ControlPojo( "A" + i, "B" + i, DEFAULT_TTL_IN_SECONDS );
+            pojos[ i ] = new ControlPojo( "A" + i, "B" + i, i%10 == 0 ? SHORT_TTL_IN_SECONDS : DEFAULT_TTL_IN_SECONDS );
         }
     }
 

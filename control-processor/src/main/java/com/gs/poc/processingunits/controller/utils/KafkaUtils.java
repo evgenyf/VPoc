@@ -60,6 +60,7 @@ public class KafkaUtils {
         props.putIfAbsent(ProducerConfig.ACKS_CONFIG, "1");
         props.putIfAbsent(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,"org.apache.kafka.common.serialization.StringSerializer");
         props.putIfAbsent(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, valueSerializerClass.getName());
+        //TODO configure retention policy
         return Utils.toProperties(props);
     }
 }

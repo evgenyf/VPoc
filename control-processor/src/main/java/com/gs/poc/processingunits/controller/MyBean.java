@@ -131,7 +131,7 @@ public class MyBean {
 
         if( !records.isEmpty() ) {
             long totalTime = System.currentTimeMillis() - startTime;
-            logger.info("Writing [{}] control events to space took [{}] msec., throughput is [{}] oper./sec", records.count(), totalTime, 1000*records.count()/totalTime );
+            //logger.info("Writing [{}] control events to space took [{}] msec., throughput is [{}] oper./sec", records.count(), totalTime, 1000*records.count()/totalTime );
         }
     }
 
@@ -149,6 +149,9 @@ public class MyBean {
                 //logger.info( "Query {} , Pojo {}", controlPojoQuery, controlPojo );
                 if( controlPojo != null ){
                     enrichDataAndSendToProducer( controlPojo, eventPojo );
+                }
+                else{
+                    logger.info( "ControlPojo is NULL for query {}", controlPojoQuery );
                 }
             }
         }
