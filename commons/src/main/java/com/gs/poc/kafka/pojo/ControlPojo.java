@@ -1,5 +1,6 @@
 package com.gs.poc.kafka.pojo;
 
+import com.gigaspaces.annotation.pojo.SpaceExclude;
 import com.gigaspaces.annotation.pojo.SpaceId;
 import com.gigaspaces.annotation.pojo.SpaceIndex;
 import com.gigaspaces.metadata.index.SpaceIndexType;
@@ -61,6 +62,7 @@ public class ControlPojo implements Serializable {
         this.c = c;
     }
 
+    @SpaceExclude
     public Integer getTtl() {
         return ttl;
     }

@@ -1,9 +1,11 @@
 package com.gs.poc.kafka.embedded;
 
 import com.gs.poc.kafka.utils.Utils;
+import kafka.admin.AdminUtils;
 import kafka.server.KafkaConfig;
 import kafka.server.KafkaServerStartable;
 import org.apache.commons.io.FileUtils;
+import org.apache.kafka.clients.admin.AdminClient;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +43,8 @@ public class EmbeddedKafka {
         KafkaConfig kafkaConfig = new KafkaConfig(kafkaProperties);
         kafka = new KafkaServerStartable(kafkaConfig);
         kafka.startup();
+
+
     }
 
     public void shutdown() {
@@ -55,6 +59,9 @@ public class EmbeddedKafka {
         props.setProperty("num.partitions", "1");
         props.setProperty("log.dirs", logDir.getAbsolutePath());
         props.setProperty("offsets.topic.replication.factor","1");
+        //props.setProperty("log.retention.ms", String.valueOf( 3000 ));
+        //props.setProperty("log.retention.bytes", String.valueOf( 1024 ));
+
         return props;
     }
 }

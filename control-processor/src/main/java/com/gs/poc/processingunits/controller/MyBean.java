@@ -150,9 +150,6 @@ public class MyBean {
                 if( controlPojo != null ){
                     enrichDataAndSendToProducer( controlPojo, eventPojo );
                 }
-                else{
-                    //logger.info( "ControlPojo is NULL for query {}", controlPojoQuery );
-                }
             }
         }
         if( !records.isEmpty() ) {
@@ -164,6 +161,17 @@ public class MyBean {
     private void enrichDataAndSendToProducer(ControlPojo controlPojo, EventPojo eventPojo) {
 
         eventPojo.setD( controlPojo.getA() + "_" + controlPojo.getB() );
+        //populate event null values
+        if( eventPojo.getA() == null ){
+            eventPojo.setA( controlPojo.getA() );
+        }
+        if( eventPojo.getB() == null ){
+            eventPojo.setB( controlPojo.getB() );
+        }
+        if( eventPojo.getC() == null ){
+            eventPojo.setC( controlPojo.getC() );
+        }
+
         //write to enriched topic "enriched"
         enrichedPojosKafkaProducer.send( new ProducerRecord<>( ENRICHED_TOPIC, "enrichedKey", eventPojo ) );
     }
